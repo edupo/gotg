@@ -7,6 +7,8 @@ import (
 	"net"
 	"strconv"
 	"strings"
+
+	"github.com/Sirupsen/logrus"
 )
 
 type Client struct {
@@ -36,7 +38,9 @@ func (c *Client) connect(address string) error {
 }
 
 func (c *Client) command(command ...string) error {
-	_, err := c.writer.WriteString(strings.Join(command, " ") + "\n")
+	cmd := strings.Join(command, " ")
+	logrus.WithField("command", cmd).Debug("Telegram command sent")
+	_, err := c.writer.WriteString(cmd + "\n")
 	if err != nil {
 		return err
 	}

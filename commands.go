@@ -2,12 +2,19 @@ package gotg
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
+	"time"
 )
 
 // ContactList fetch from telegram
 func (c *Client) ContactList() ([]Contact, error) {
-	c.command("contact_list")
+
+	err := c.command("contact_list")
+	if err != nil {
+		return nil, err
+	}
+
 	buf, err := c.readAnswer()
 	if err != nil {
 		return nil, err
@@ -22,7 +29,12 @@ func (c *Client) ContactList() ([]Contact, error) {
 
 // ChannelList fetch from telegram
 func (c *Client) ChannelList(limit, offset int) ([]Channel, error) {
-	c.command("channel_list", strconv.Itoa(limit), strconv.Itoa(offset))
+
+	err := c.command("channel_list", strconv.Itoa(limit), strconv.Itoa(offset))
+	if err != nil {
+		return nil, err
+	}
+
 	buf, err := c.readAnswer()
 	if err != nil {
 		return nil, err
@@ -43,4 +55,24 @@ func (c *Client) Message(peer *Peer, msg string) error {
 // MainSession ask telegram-cli to send updates to this session
 func (c *Client) MainSession() error {
 	return c.command("main_session")
+}
+
+func (c *Client) Search(peer *Peer, pattern string, limit, offset uint64, from, to time.Time) ([]Message, error) {
+	//search [peer] [limit] [from] [to] [offset] pattern
+	err := c.command(fmt.Sprintf("search %v %v %v %v %v %v",
+		peer.PrintName, limit, from.Unix(), to.Unix(), offset, pattern))
+	if err != nil {
+		return nil, err
+	}
+
+	buf, err := c.readAnswer()
+	if err != nil {
+		return nil, err
+	}
+	var messages []Message
+	err = json.Unmarshal(buf, &messages)
+	if err != nil {
+		return nil, err
+	}
+	return messages, nil
 }
