@@ -35,8 +35,8 @@ func (c *Client) connect(address string) error {
 	return err
 }
 
-func (c *Client) command(command string) error {
-	_, err := c.writer.WriteString(command + "\n")
+func (c *Client) command(command ...string) error {
+	_, err := c.writer.WriteString(strings.Join(command, " ") + "\n")
 	if err != nil {
 		return err
 	}

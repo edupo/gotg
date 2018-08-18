@@ -1,6 +1,7 @@
 package gotg
 
 type Peer struct {
+	client    *Client
 	Id        string `json:"id"`
 	PrintName string `json:"print_name"`
 	Flags     uint64 `json:"flags"`
