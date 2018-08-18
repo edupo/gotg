@@ -24,6 +24,9 @@ func (c *Client) ContactList() ([]Contact, error) {
 	if err != nil {
 		return nil, err
 	}
+	for _, contact := range contacts {
+		contact.Peer.client = c
+	}
 	return contacts, nil
 }
 
@@ -43,6 +46,9 @@ func (c *Client) ChannelList(limit, offset int) ([]Channel, error) {
 	err = json.Unmarshal(buf, &channels)
 	if err != nil {
 		return nil, err
+	}
+	for _, channel := range channels {
+		channel.Peer.client = c
 	}
 	return channels, nil
 }
