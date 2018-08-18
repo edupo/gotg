@@ -39,3 +39,8 @@ func (c *Client) ChannelList(limit, offset int) ([]Channel, error) {
 func (c *Client) Message(peer *Peer, msg string) error {
 	return c.command("msg", peer.PrintName, msg)
 }
+
+// MainSession ask telegram-cli to send updates to this session
+func (c *Client) MainSession() error {
+	return c.command("main_session")
+}
