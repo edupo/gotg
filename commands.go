@@ -1,8 +1,11 @@
 package gotg
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"strconv"
+)
 
-// ContactList from telegram
+// ContactList fetch from telegram
 func (c *Client) ContactList() ([]Contact, error) {
 	c.command("contact_list")
 	buf, err := c.readAnswer()
@@ -15,6 +18,21 @@ func (c *Client) ContactList() ([]Contact, error) {
 		return nil, err
 	}
 	return contacts, nil
+}
+
+// ChannelList fetch from telegram
+func (c *Client) ChannelList(limit, offset int) ([]Channel, error) {
+	c.command("channel_list", strconv.Itoa(limit), strconv.Itoa(offset))
+	buf, err := c.readAnswer()
+	if err != nil {
+		return nil, err
+	}
+	var channels []Channel
+	err = json.Unmarshal(buf, &channels)
+	if err != nil {
+		return nil, err
+	}
+	return channels, nil
 }
 
 // Message send a string to a peer

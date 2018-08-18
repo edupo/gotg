@@ -23,6 +23,20 @@ func TestContactList(t *testing.T) {
 	fmt.Print(fmt.Sprintf("Fetched %v contacts\n", len(contacts)))
 }
 
+func TestChannelList(t *testing.T) {
+	client, err := NewClient(test_address)
+	if err != nil {
+		t.Error(err)
+	}
+
+	channels, err := client.ChannelList(50, 0)
+	if err != nil {
+		t.Error(err)
+	}
+
+	fmt.Print(fmt.Sprintf("Fetched %v channels\n", len(channels)))
+}
+
 func TestMessage(t *testing.T) {
 	client, err := NewClient(test_address)
 	if err != nil {
