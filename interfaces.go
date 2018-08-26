@@ -7,5 +7,5 @@ type Searcher interface {
 }
 
 type Messager interface {
-	Message(msg string) error
+	SendMessage(msg string) error
 }

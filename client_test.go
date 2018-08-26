@@ -52,7 +52,7 @@ func TestMessage(t *testing.T) {
 		},
 	}
 
-	err = client.Message(&channel.Peer, "This is a test message.")
+	err = client.SendMessage(&channel.Peer, "This is a test message.")
 	if err != nil {
 		t.Error(err)
 	}

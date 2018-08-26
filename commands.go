@@ -53,8 +53,8 @@ func (c *Client) ChannelList(limit, offset int) ([]Channel, error) {
 	return channels, nil
 }
 
-// Message send a string to a peer
-func (c *Client) Message(peer *Peer, msg string) error {
+// SendMessage send a string to a peer
+func (c *Client) SendMessage(peer *Peer, msg string) error {
 	return c.command("msg", peer.PrintName, msg)
 }
 

@@ -49,7 +49,7 @@ func (c *Client) command(command ...string) error {
 
 func (c *Client) readAnswer() ([]byte, error) {
 	// First line is formatted like:
-	// ANSWER <Message size>
+	// ANSWER <SendMessage size>
 	str, err := c.reader.ReadString('\n')
 	if err != nil {
 		return nil, err

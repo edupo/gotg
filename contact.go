@@ -14,6 +14,6 @@ func (c *Contact) Search(pattern string, from time.Time, limit, offset uint64) (
 	return c.Peer.Search(pattern, from, limit, offset)
 }
 
-func (c *Contact) Message(msg string) error {
-	return c.Peer.Message(msg)
+func (c *Contact) SendMessage(msg string) error {
+	return c.Peer.SendMessage(msg)
 }

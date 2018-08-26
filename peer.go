@@ -17,6 +17,13 @@ func (p *Peer) Search(pattern string, from time.Time, limit, offset uint64) ([]M
 	return p.client.Search(p, pattern, limit, offset, from, time.Now())
 }
 
-func (p *Peer) Message(msg string) error {
-	return p.client.Message(p, msg)
+func (p *Peer) SendMessage(msg string) error {
+	return p.client.SendMessage(p, msg)
+}
+
+func NewPeer(name string, client *Client) *Peer {
+	return &Peer{
+		client:    client,
+		PrintName: name,
+	}
 }

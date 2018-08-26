@@ -13,6 +13,6 @@ func (c *Channel) Search(pattern string, from time.Time, limit, offset uint64) (
 	return c.Peer.Search(pattern, from, limit, offset)
 }
 
-func (c *Channel) Message(msg string) error {
-	return c.Peer.Message(msg)
+func (c *Channel) SendMessage(msg string) error {
+	return c.Peer.SendMessage(msg)
 }
