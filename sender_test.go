@@ -8,17 +8,10 @@ import (
 	"github.com/Sirupsen/logrus"
 )
 
-var (
-	test_address = "127.0.0.1:4458"
-)
-
 func TestContactList(t *testing.T) {
-	client, err := NewClient(test_address)
-	if err != nil {
-		t.Error(err)
-	}
+	sender := NewSender(DefaultConfig)
 
-	contacts, err := client.ContactList()
+	contacts, err := sender.ContactList()
 	if err != nil {
 		t.Error(err)
 	}
@@ -27,12 +20,9 @@ func TestContactList(t *testing.T) {
 }
 
 func TestChannelList(t *testing.T) {
-	client, err := NewClient(test_address)
-	if err != nil {
-		t.Error(err)
-	}
+	sender := NewSender(DefaultConfig)
 
-	channels, err := client.ChannelList(50, 0)
+	channels, err := sender.ChannelList(50, 0)
 	if err != nil {
 		t.Error(err)
 	}
@@ -41,10 +31,7 @@ func TestChannelList(t *testing.T) {
 }
 
 func TestMessage(t *testing.T) {
-	client, err := NewClient(test_address)
-	if err != nil {
-		t.Error(err)
-	}
+	sender := NewSender(DefaultConfig)
 
 	channel := Channel{
 		Peer: Peer{
@@ -52,18 +39,15 @@ func TestMessage(t *testing.T) {
 		},
 	}
 
-	err = client.SendMessage(&channel.Peer, "This is a test message.")
+	err := sender.SendMessage(&channel.Peer, "This is a test message.")
 	if err != nil {
 		t.Error(err)
 	}
 }
 
 func TestSearch(t *testing.T) {
+	sender := NewSender(DefaultConfig)
 	logrus.SetLevel(logrus.DebugLevel)
-	client, err := NewClient(test_address)
-	if err != nil {
-		t.Error(err)
-	}
 
 	channel := Channel{
 		Peer: Peer{
@@ -71,7 +55,7 @@ func TestSearch(t *testing.T) {
 		},
 	}
 
-	messages, err := client.Search(&channel.Peer,
+	messages, err := sender.Search(&channel.Peer,
 		"This",
 		10,
 		0,
