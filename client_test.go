@@ -9,7 +9,7 @@ import (
 )
 
 func TestContactList(t *testing.T) {
-	sender := NewSender(DefaultConfig)
+	sender := NewClient(&DefaultConfig)
 
 	contacts, err := sender.ContactList()
 	if err != nil {
@@ -20,7 +20,7 @@ func TestContactList(t *testing.T) {
 }
 
 func TestChannelList(t *testing.T) {
-	sender := NewSender(DefaultConfig)
+	sender := NewClient(&DefaultConfig)
 
 	channels, err := sender.ChannelList(50, 0)
 	if err != nil {
@@ -31,7 +31,7 @@ func TestChannelList(t *testing.T) {
 }
 
 func TestMessage(t *testing.T) {
-	sender := NewSender(DefaultConfig)
+	sender := NewClient(&DefaultConfig)
 
 	channel := Channel{
 		Peer: Peer{
@@ -46,7 +46,7 @@ func TestMessage(t *testing.T) {
 }
 
 func TestSearch(t *testing.T) {
-	sender := NewSender(DefaultConfig)
+	sender := NewClient(&DefaultConfig)
 	logrus.SetLevel(logrus.DebugLevel)
 
 	channel := Channel{

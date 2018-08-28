@@ -1,11 +1,15 @@
 package gotg
 
-type Event struct {
+type Type struct {
 	Event string `json:"event"`
 }
 
+type Result struct {
+	Result string `json:"result"`
+}
+
 type Message struct {
-	Event
+	Type
 	Date    uint64 `json:"date"`
 	Flags   uint64 `json:"flags"`
 	Id      string `json:"id"`

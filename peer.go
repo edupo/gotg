@@ -3,7 +3,7 @@ package gotg
 import "time"
 
 type Peer struct {
-	client *Client
+	config *Config
 	Searcher
 	Messager
 	Id        string `json:"id"`
@@ -14,16 +14,16 @@ type Peer struct {
 }
 
 func (p *Peer) Search(pattern string, from time.Time, limit, offset uint64) ([]Message, error) {
-	return p.client.Search(p, pattern, limit, offset, from, time.Now())
+	return NewClient(p.config).Search(p, pattern, limit, offset, from, time.Now())
 }
 
 func (p *Peer) SendMessage(msg string) error {
-	return p.client.SendMessage(p, msg)
+	return NewClient(p.config).SendMessage(p, msg)
 }
 
-func NewPeer(name string, client *Client) *Peer {
+func NewPeer(name string, config *Config) *Peer {
 	return &Peer{
-		client:    client,
+		config:    config,
 		PrintName: name,
 	}
 }
