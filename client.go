@@ -29,8 +29,7 @@ func (c *Client) connect() error {
 	if c.conn != nil {
 		return nil
 	}
-	// TODO use DialTimeout
-	conn, err := net.Dial("tcp", c.config.Address)
+	conn, err := net.DialTimeout("tcp", c.config.Address, c.config.Timeout)
 	if err != nil {
 		return err
 	}
