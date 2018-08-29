@@ -5,27 +5,12 @@ import (
 
 	"bytes"
 
-	"encoding/json"
-
 	"gopkg.in/tomb.v2"
 )
 
 var (
 	lineBreak = []byte{10}
 )
-
-type ReceivedData struct {
-	Type
-	Data []byte
-}
-
-func NewReceivedData(data []byte) (*ReceivedData, error) {
-	var rd = ReceivedData{
-		Data: data,
-	}
-	err := json.Unmarshal(data, &rd)
-	return &rd, err
-}
 
 type Receiver struct {
 	client  *Client
