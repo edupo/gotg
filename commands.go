@@ -83,3 +83,13 @@ func (c *Client) Search(peer string, pattern string, limit, offset uint64, from,
 	}
 	return messages, nil
 }
+
+func (c *Client) GetSelf() (Peer, error) {
+	buf, err := c.Send("get_self")
+	if err != nil {
+		return Peer{}, err
+	}
+	var peer Peer
+	err = json.Unmarshal(buf, &peer)
+	return peer, err
+}
