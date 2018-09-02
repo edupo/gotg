@@ -33,13 +33,7 @@ func TestChannelList(t *testing.T) {
 func TestMessage(t *testing.T) {
 	sender := NewClient(&DefaultConfig)
 
-	channel := Channel{
-		Peer: Peer{
-			PrintName: "Prueba",
-		},
-	}
-
-	err := sender.SendMessage(&channel.Peer, "This is a test message.")
+	err := sender.SendMessage("Prueba", "This is a test message.")
 	if err != nil {
 		t.Error(err)
 	}
@@ -49,13 +43,7 @@ func TestSearch(t *testing.T) {
 	sender := NewClient(&DefaultConfig)
 	logrus.SetLevel(logrus.DebugLevel)
 
-	channel := Channel{
-		Peer: Peer{
-			PrintName: "Prueba",
-		},
-	}
-
-	messages, err := sender.Search(&channel.Peer,
+	messages, err := sender.Search("Prueba",
 		"This",
 		10,
 		0,

@@ -14,11 +14,11 @@ type Peer struct {
 }
 
 func (p *Peer) Search(pattern string, from time.Time, limit, offset uint64) ([]Message, error) {
-	return NewClient(p.config).Search(p, pattern, limit, offset, from, time.Now())
+	return NewClient(p.config).Search(p.PrintName, pattern, limit, offset, from, time.Now())
 }
 
 func (p *Peer) SendMessage(msg string) error {
-	return NewClient(p.config).SendMessage(p, msg)
+	return NewClient(p.config).SendMessage(p.PrintName, msg)
 }
 
 func NewPeer(name string, config *Config) *Peer {

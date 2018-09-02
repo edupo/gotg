@@ -7,7 +7,8 @@ import (
 )
 
 func TestReceiver(t *testing.T) {
-	receiver, err := NewReceiver(DefaultConfig)
+	receiver := NewReceiver(DefaultConfig)
+	err := receiver.Start()
 	if err != nil {
 		t.Error(err)
 	}
@@ -21,7 +22,7 @@ func TestReceiver(t *testing.T) {
 		if !ok {
 			break
 		}
-		if msg.Event == "message" {
+		if msg.Type() == "message" {
 			fmt.Println("Message received!")
 		}
 		fmt.Println(string(msg.Data))

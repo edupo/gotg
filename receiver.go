@@ -19,20 +19,24 @@ type Receiver struct {
 	config  Config
 }
 
-func NewReceiver(config Config) (*Receiver, error) {
-	receiver := &Receiver{
+func NewReceiver(config Config) *Receiver {
+	r := &Receiver{
 		config: config,
 	}
-	receiver.client = NewClient(&receiver.config)
+	client := NewClient(&r.config)
+	r.client = client
+	return r
+}
 
-	err := receiver.connect()
+func (r *Receiver) Start() error {
+	err := r.connect()
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	receiver.tomb.Go(receiver.loop)
+	r.tomb.Go(r.loop)
 
-	return receiver, nil
+	return nil
 }
 
 func (r *Receiver) Stop() error {

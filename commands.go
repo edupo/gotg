@@ -46,8 +46,8 @@ func (c *Client) ChannelList(limit, offset int) ([]Channel, error) {
 }
 
 // SendMessage send a string to a peer
-func (c *Client) SendMessage(peer *Peer, msg string) error {
-	buf, err := c.Send("msg", peer.PrintName, strconv.Quote(msg))
+func (c *Client) SendMessage(peer string, msg string) error {
+	buf, err := c.Send("msg", peer, strconv.Quote(msg))
 	if err != nil {
 		return err
 	}
@@ -68,10 +68,10 @@ func (c *Client) MainSession() error {
 	return nil
 }
 
-func (c *Client) Search(peer *Peer, pattern string, limit, offset uint64, from, to time.Time) ([]Message, error) {
+func (c *Client) Search(peer string, pattern string, limit, offset uint64, from, to time.Time) ([]Message, error) {
 	//search [peer] [limit] [from] [to] [offset] pattern
 	buf, err := c.Send(fmt.Sprintf("search %v %v %v %v %v %v",
-		peer.PrintName, limit, from.Unix(), to.Unix(), offset, pattern))
+		peer, limit, from.Unix(), to.Unix(), offset, pattern))
 	if err != nil {
 		return nil, err
 	}

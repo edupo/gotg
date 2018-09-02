@@ -3,7 +3,7 @@ package gotg
 import "encoding/json"
 
 type ReceivedData struct {
-	Type
+	Event
 	Data []byte
 }
 
@@ -15,9 +15,13 @@ func NewReceivedData(data []byte) (*ReceivedData, error) {
 	return &rd, err
 }
 
+func (rd *ReceivedData) Type() string {
+	return rd.Event.Event
+}
+
 func (rd *ReceivedData) ToMessage() (Message, bool) {
 	var m Message
-	if rd.Event != "message" {
+	if rd.Type() != "message" {
 		return m, false
 	}
 	err := json.Unmarshal(rd.Data, &m)

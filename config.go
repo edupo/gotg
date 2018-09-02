@@ -9,5 +9,5 @@ type Config struct {
 
 var DefaultConfig = Config{
 	Address: "127.0.0.1:4458",
-	Timeout: 10 * time.Minute,
+	Timeout: 10 * time.Second,
 }
